@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Hello World!</title>
+<title>JSP Board Web-site</title>
 </head>
 <body>
-	Hello World!
+	<script>
+		location.href = 'login.jsp';
+	</script>
 </body>
 </html>
