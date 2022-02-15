@@ -41,10 +41,9 @@ public class UserDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				conn.commit();
+				rs.close();
+				pstmt.close();
 				conn.close();
-				if(rs != null) rs.close();
-				if(pstmt != null) pstmt.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -66,10 +65,9 @@ public class UserDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				conn.commit();
+				rs.close();
+				pstmt.close();
 				conn.close();
-				if(rs != null) rs.close();
-				if(pstmt != null) pstmt.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
