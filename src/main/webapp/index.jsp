@@ -3,8 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>JSP Board Web-site</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/custom.css">
+	<title>JSP Board Web-site</title>
 </head>
 <body>
 	<script>
