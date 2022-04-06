@@ -137,7 +137,7 @@
 				<%	
 					}
 				
-					if (bbsDAO.nextPage(pageNumber + 1)) {
+					if (bbsDAO.nextPage(pageNumber)) {
 				%>
 					<a href="bbs.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-success btn-arrow-right">
 						Next

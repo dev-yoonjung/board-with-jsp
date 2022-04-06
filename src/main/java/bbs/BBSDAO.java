@@ -53,6 +53,20 @@ public class BBSDAO {
 		return -1; // 데이터베이스 오류
 	}
 	
+	public int getCount() {
+		String SQL = "SELECT COUNT(*) FROM BBS WHERE bbsAvailable = 1";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; // 데이터베이스 오류
+	}
+	
 	public int write(String bbsTitle, String userID, String bbsContent) {
 		String SQL = "INSERT INTO BBS VALUES (?, ?, ?, ?, ?, ?)";
 		try {
@@ -71,11 +85,11 @@ public class BBSDAO {
 	}
 	
 	public List<BBS> getList(int pageNumber) {
-		String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10";
+		String SQL = "SELECT * FROM BBS WHERE bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10 OFFSET ?";
 		List<BBS> list = new ArrayList<>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+			pstmt.setInt(1, (pageNumber - 1) * 10);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				BBS bbs = new BBS();
@@ -94,18 +108,10 @@ public class BBSDAO {
 	}
 	
 	public boolean nextPage(int pageNumber) {
-		String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				return true;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (getCount() - (pageNumber * 10) <= 0) {
+			return false;
 		}
-		return false; // 데이터베이스 오류
+		return true;
 	}
 	
 	public BBS getBBS(int bbsID) {
